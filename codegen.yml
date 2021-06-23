@@ -1,0 +1,19 @@
+schema: ${GRAPHQL_URL:https://firesquadio.api.stage.firesquad.io/graphql}
+config:
+  scalars:
+    ID: 'string'
+    Date: 'string'
+    Time: 'string'
+    DateTime: 'string'
+
+hooks:
+  afterStart:
+    - ./node_modules/.bin/tsc plugins/codegen-build-operations/index.ts --esModuleInterop
+
+generates:
+  './src/index.ts':
+    plugins:
+      - typescript:
+          noExport: true
+      - './plugins/codegen-build-operations/index.js':
+          templateName: 'sdk.template.ts'

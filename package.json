@@ -1,0 +1,30 @@
+{
+  "name": "@firesquad/api-sdk",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "author": "Nahuel Veron <negan@firesquad.io>",
+  "license": "MIT",
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.21.5",
+    "@graphql-codegen/near-operation-file-preset": "^1.18.1",
+    "@graphql-codegen/schema-ast": "^1.18.3",
+    "@graphql-codegen/typescript": "^1.22.1",
+    "@types/ws": "^7.4.4",
+    "change-case-all": "^1.0.14",
+    "graphql": "^15.5.0",
+    "graphql-tools": "^7.0.5",
+    "typescript": "^4.3.2"
+  },
+  "scripts": {
+    "build": "yarn generate && tsc",
+    "generate": "graphql-codegen",
+    "prepare": "yarn build"
+  },
+  "dependencies": {
+    "cross-fetch": "^3.1.4"
+  }
+}
