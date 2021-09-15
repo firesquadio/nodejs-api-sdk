@@ -1,4 +1,4 @@
-schema: ${GRAPHQL_URL:https://firesquadio.api.stage.firesquad.io/graphql}
+schema: ${GRAPHQL_URL:https://firesquadio.api.fsquad.io/graphql}
 config:
   scalars:
     ID: 'string'
