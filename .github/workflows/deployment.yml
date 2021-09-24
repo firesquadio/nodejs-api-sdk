@@ -50,7 +50,6 @@ jobs:
 
       - name: yarn semantic-release
         if: success()
-        working-directory: ./packages/widget
         run: yarn semantic-release
 
         env:
