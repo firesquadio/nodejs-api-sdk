@@ -1,0 +1,58 @@
+name: Deployment
+
+on:
+  push:
+    branches:
+      - master
+      - alpha
+
+jobs:
+  Test:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Read .nvmrc
+        run: echo ::set-output name=NVMRC::$(cat .nvmrc)
+        id: nvm
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+
+      - name: Install AWSCLI
+        run: 'sudo apt-get update && sudo apt-get install -y awscli'
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v1
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Lint and Test
+        run: |
+          yarn generate
+          yarn lint
+          yarn build
+
+        env:
+          CI: true
+
+      - name: yarn semantic-release
+        if: success()
+        working-directory: ./packages/widget
+        run: yarn semantic-release
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_SECRET }}
+          NPM_TOKEN: ${{ secrets.NPM_DEPLOY_TOKEN }} 

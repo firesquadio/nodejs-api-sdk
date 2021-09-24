@@ -1,0 +1,9 @@
+*.min.js
+*.generated.ts
+dist/
+node_modules/
+coverage/
+.webpack/
+.yarn/
+index.ts
+plugins/codegen-build-operations/index.js
