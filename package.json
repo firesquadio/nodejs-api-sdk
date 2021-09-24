@@ -4,7 +4,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "/dist"
+    "/dist/index.d.ts",
+    "/dist/index.js"
   ],
   "author": "Nahuel Veron <negan@firesquad.io>",
   "license": "MIT",
@@ -14,17 +15,29 @@
     "@graphql-codegen/schema-ast": "^1.18.3",
     "@graphql-codegen/typescript": "^1.22.1",
     "@types/ws": "^7.4.4",
+    "@typescript-eslint/eslint-plugin": "^4.31.2",
+    "@typescript-eslint/parser": "^4.31.2",
     "change-case-all": "^1.0.14",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.26.0",
+    "eslint-plugin-react-hooks": "^4.1.2",
     "graphql": "^15.5.0",
     "graphql-tools": "^7.0.5",
+    "prettier": "^2.4.1",
     "typescript": "^4.3.2"
   },
   "scripts": {
     "build": "yarn generate && tsc",
     "generate": "graphql-codegen",
+    "lint": "tsc --noEmit && eslint . --ext .js,.ts,.tsx",
+    "lint:fix": "tsc --noEmit && eslint . --ext .js,.ts,.tsx --fix",
     "prepare": "yarn build"
   },
   "dependencies": {
-    "cross-fetch": "^3.1.4"
+    "cross-fetch": "^3.1.4",
+    "ts-node": "^10.2.1"
   }
 }

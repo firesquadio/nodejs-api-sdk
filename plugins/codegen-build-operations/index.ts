@@ -2,8 +2,13 @@ import fs from 'fs'
 import path from 'path'
 import { pascalCase } from 'change-case-all'
 import { buildOperationNodeForField } from 'graphql-tools'
-import {  CodegenPlugin } from '@graphql-codegen/plugin-helpers'
-import { OperationDefinitionNode, TypeNode, print, GraphQLSchema } from 'graphql'
+import { CodegenPlugin } from '@graphql-codegen/plugin-helpers'
+import {
+  OperationDefinitionNode,
+  TypeNode,
+  print,
+  GraphQLSchema,
+} from 'graphql'
 
 function resolveType(type: string, scalars?: Record<string, string>) {
   if (['ID', 'String', 'Boolean', 'Int', 'Float'].includes(type))
@@ -16,8 +21,11 @@ function resolveType(type: string, scalars?: Record<string, string>) {
   return pascalCase(type)
 }
 
-
-function buildType(type: TypeNode, scalars?: Record<string, string>, required?: boolean) {
+function buildType(
+  type: TypeNode,
+  scalars?: Record<string, string>,
+  required?: boolean
+) {
   if (type.kind === 'ListType') {
     return `Array<${buildType(type.type, scalars)}>`
   }
@@ -32,19 +40,29 @@ function buildType(type: TypeNode, scalars?: Record<string, string>, required?: 
   }
 }
 
-function buildOperation(schema: GraphQLSchema, operation: OperationDefinitionNode, scalars?: Record<string, string>) {
-  const field = operation.operation === 'mutation'
-    ? schema.getMutationType().getFields()[operation.name.value]
-    : schema.getQueryType().getFields()[operation.name.value]
-  
-  const variables = operation.variableDefinitions.map(_ => ({
+function buildOperation(
+  schema: GraphQLSchema,
+  operation: OperationDefinitionNode,
+  scalars?: Record<string, string>
+) {
+  const field =
+    operation.operation === 'mutation'
+      ? schema.getMutationType().getFields()[operation.name.value]
+      : schema.getQueryType().getFields()[operation.name.value]
+
+  const variables = operation.variableDefinitions.map((_) => ({
     name: _.variable.name.value,
-    type: buildType(_.type, scalars)
+    type: buildType(_.type, scalars),
   }))
 
-  const returnString = `'${operation.name.value}', { ${operation.name.value}: ${buildType(field.astNode.type)} }`
-  const variableDefinitionString = variables.map(_ => `${_.name}: ${_.type}`).join(', ')
-  const variablePayloadString = '{ ' + variables.map(_ => _.name).join(', ') + ' }'
+  const returnString = `'${operation.name.value}', { ${
+    operation.name.value
+  }: ${buildType(field.astNode.type)} }`
+  const variableDefinitionString = variables
+    .map((_) => `${_.name}: ${_.type}`)
+    .join(', ')
+  const variablePayloadString =
+    '{ ' + variables.map((_) => _.name).join(', ') + ' }'
 
   return `
   ${field.description ? `/** ${field.description} */` : ''}
@@ -57,7 +75,10 @@ function buildOperation(schema: GraphQLSchema, operation: OperationDefinitionNod
   }`
 }
 
-const plugin: CodegenPlugin<{ scalars?: Record<string, string>, templateName: string }> = {
+const plugin: CodegenPlugin<{
+  scalars?: Record<string, string>
+  templateName: string
+}> = {
   validate: (schema, documents, config) => {
     if (!('templateName' in config)) {
       throw new Error(`'templateName' not found in config.`)
@@ -66,35 +87,46 @@ const plugin: CodegenPlugin<{ scalars?: Record<string, string>, templateName: st
   plugin: (schema, documents, config, info) => {
     const queryFields = schema.getQueryType().getFields()
     const mutationFields = schema.getMutationType().getFields()
-    
-    const queryOperations = Object.keys(queryFields).map(_ => {
+
+    const queryOperations = Object.keys(queryFields).map((_) => {
       const op = buildOperationNodeForField({
         schema,
         kind: 'query',
         field: _,
-        depthLimit: 10
+        depthLimit: 10,
       })
 
-      return buildOperation(schema, { ...op, name: { ...op.name, value: _ } }, config.scalars)
+      return buildOperation(
+        schema,
+        { ...op, name: { ...op.name, value: _ } },
+        config.scalars
+      )
     })
 
-    const mutationOperations = Object.keys(mutationFields).map(_ => {
+    const mutationOperations = Object.keys(mutationFields).map((_) => {
       const op = buildOperationNodeForField({
         schema,
         kind: 'mutation',
         field: _,
-        depthLimit: 10
+        depthLimit: 10,
       })
 
-      return buildOperation(schema, { ...op, name: { ...op.name, value: _ } }, config.scalars)
+      return buildOperation(
+        schema,
+        { ...op, name: { ...op.name, value: _ } },
+        config.scalars
+      )
     })
 
-    const template = fs.readFileSync(path.join(process.cwd(), config.templateName), 'utf-8')
+    const template = fs.readFileSync(
+      path.join(process.cwd(), config.templateName),
+      'utf-8'
+    )
     const payload = `
       ${queryOperations.join('\n')}
       ${mutationOperations.join('\n')}
     `
-    
+
     return template.replace('/* $REPLACE$ */', payload)
   },
 }
