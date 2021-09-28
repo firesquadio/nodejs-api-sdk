@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "author": "Nahuel Veron <negan@firesquad.io>",
   "files": [
     "/dist/index.d.ts",
     "/dist/index.js"
@@ -10,7 +11,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "author": "Nahuel Veron <negan@firesquad.io>",
   "license": "MIT",
   "devDependencies": {
     "@graphql-codegen/cli": "^1.21.5",
