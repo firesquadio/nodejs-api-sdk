@@ -7,6 +7,9 @@
     "/dist/index.d.ts",
     "/dist/index.js"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "Nahuel Veron <negan@firesquad.io>",
   "license": "MIT",
   "devDependencies": {
