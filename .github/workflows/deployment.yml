@@ -21,9 +21,6 @@ jobs:
         with:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
-      - name: Install AWSCLI
-        run: 'sudo apt-get update && sudo apt-get install -y awscli'
-
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
