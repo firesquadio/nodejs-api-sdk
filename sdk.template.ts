@@ -1,9 +1,17 @@
 import crypto from 'crypto'
 import fetch from 'cross-fetch'
 
-type GraphQLError = { message: string, path: string[], extensions?: { code?: string }}
+type GraphQLError = {
+  message: string
+  path: string[]
+  extensions?: { code?: string }
+}
 
-type Request<key extends string | number | symbol> = { query: string; operationName: key, variables: Record<string, unknown> }
+type Request<key extends string | number | symbol> = {
+  query: string
+  operationName: key
+  variables: Record<string, unknown>
+}
 
 class AuthenticationError extends Error {
   constructor(message: string) {
@@ -59,7 +67,10 @@ export class Firesquad {
    * @returns SHA-256 signature of the payload.
    */
   private signPayload(payload: string) {
-    return crypto.createHmac('sha256', this.apiKey).update(payload).digest('hex')
+    return crypto
+      .createHmac('sha256', this.apiKey)
+      .update(payload)
+      .digest('hex')
   }
 
   /**
@@ -77,10 +88,10 @@ export class Firesquad {
         method: 'POST',
         body,
         headers: {
-          'Accept': 'application/json',
+          Accept: 'application/json',
           'Content-Type': 'application/json',
-          'x-signature-sha-256': this.signPayload(body)
-        }
+          'x-signature-sha-256': this.signPayload(body),
+        },
       })
 
       if (res.ok) {
@@ -88,11 +99,14 @@ export class Firesquad {
         this.token = data.token
         return this.token
       }
-  
+
       if (res.status === 400)
         throw new AuthenticationError(`Incorrect credentials.`)
-      
-      throw new UnexpectedError(`Failed to exchange token`, { res, json: await res.json() })
+
+      throw new UnexpectedError(`Failed to exchange token`, {
+        res,
+        json: await res.json(),
+      })
     } catch (e) {
       if (e.data) throw e
       throw new UnexpectedError(`Failed to exchange token`, { error: e })
@@ -107,36 +121,39 @@ export class Firesquad {
     try {
       if (this.token) {
         const date = Date.now() - 500
-        const token = JSON.parse(Buffer.from(this.token.split('.')[1], 'base64').toString('utf-8'))
-        return !token || date >= token.exp * 1000 ? await this.refreshToken() : this.token
+        const token = JSON.parse(
+          Buffer.from(this.token.split('.')[1], 'base64').toString('utf-8')
+        )
+        return !token || date >= token.exp * 1000
+          ? await this.refreshToken()
+          : this.token
       }
 
       return await this.refreshToken()
-    } catch(e) {
+    } catch (e) {
       return await this.refreshToken()
     }
   }
 
-
-
-  private async doRequest<key extends keyof res, res = Record<key, unknown>>(request: Request<key>): Promise<res[key]> {
+  private async doRequest<key extends keyof res, res = Record<key, unknown>>(
+    request: Request<key>
+  ): Promise<res[key]> {
     const req = await fetch(`${this.apiUrl}/graphql`, {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${await this.getToken()}`
+        Authorization: `Bearer ${await this.getToken()}`,
       },
       body: JSON.stringify({
         query: request.query,
         variables: request.variables,
-        operationName: request.operationName
-      })
+        operationName: request.operationName,
+      }),
     })
 
     const { data, errors } = await req.json()
-    if (errors)
-      throw new OperationError(errors)
+    if (errors) throw new OperationError(errors)
 
     return data?.[request.operationName]
   }
