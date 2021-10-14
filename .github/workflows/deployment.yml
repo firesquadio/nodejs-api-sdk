@@ -47,7 +47,7 @@ jobs:
           CI: true
 
       - name: yarn semantic-release
-        if: success()
+        if: success() && github.actor != 'kodiakhq[bot]'
         run: yarn semantic-release
 
         env:
