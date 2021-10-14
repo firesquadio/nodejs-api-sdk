@@ -21,7 +21,7 @@
     "@semantic-release/github": "^8.0.0",
     "@semantic-release/npm": "^8.0.0",
     "@types/ws": "^8.2.0",
-    "@typescript-eslint/eslint-plugin": "^4.31.2",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "change-case-all": "^1.0.14",
     "eslint": "^7.32.0",
