@@ -30,7 +30,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.1.2",
-    "graphql": "^15.7.0",
+    "graphql": "^15.7.1",
     "graphql-tools": "^8.2.0",
     "prettier": "^2.4.1",
     "semantic-release": "^18.0.0",
