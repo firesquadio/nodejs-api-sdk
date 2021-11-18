@@ -14,7 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "@graphql-codegen/cli": "^2.3.0",
-    "@graphql-codegen/near-operation-file-preset": "^2.2.1",
+    "@graphql-codegen/near-operation-file-preset": "^2.2.2",
     "@graphql-codegen/schema-ast": "^2.3.0",
     "@graphql-codegen/typescript": "^2.4.0",
     "@semantic-release/git": "^10.0.1",
