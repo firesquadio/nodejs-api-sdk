@@ -1,13 +1,14 @@
 import fs from 'fs'
 import path from 'path'
 import { pascalCase } from 'change-case-all'
-import { buildOperationNodeForField } from 'graphql-tools'
 import { CodegenPlugin } from '@graphql-codegen/plugin-helpers'
+import { buildOperationNodeForField } from '@graphql-tools/utils'
 import {
-  OperationDefinitionNode,
-  TypeNode,
   print,
+  TypeNode,
   GraphQLSchema,
+  OperationTypeNode,
+  OperationDefinitionNode,
 } from 'graphql'
 
 function resolveType(type: string, scalars?: Record<string, string>) {
@@ -91,9 +92,9 @@ const plugin: CodegenPlugin<{
     const queryOperations = Object.keys(queryFields).map((_) => {
       const op = buildOperationNodeForField({
         schema,
-        kind: 'query',
         field: _,
         depthLimit: 10,
+        kind: OperationTypeNode.QUERY,
       })
 
       return buildOperation(
@@ -106,9 +107,9 @@ const plugin: CodegenPlugin<{
     const mutationOperations = Object.keys(mutationFields).map((_) => {
       const op = buildOperationNodeForField({
         schema,
-        kind: 'mutation',
         field: _,
         depthLimit: 10,
+        kind: OperationTypeNode.MUTATION,
       })
 
       return buildOperation(
