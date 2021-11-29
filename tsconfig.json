@@ -7,7 +7,6 @@
     "outDir": "./dist"
   },
   "include": [
-    "sdk.template.ts",
-    "index.ts"
+    "*.ts"
   ]
 }
