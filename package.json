@@ -1,6 +1,6 @@
 {
   "name": "@firesquad/api-sdk",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": "Nahuel Veron <negan@firesquad.io>",
