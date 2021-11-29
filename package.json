@@ -5,10 +5,8 @@
   "types": "dist/index.d.ts",
   "author": "Nahuel Veron <negan@firesquad.io>",
   "files": [
-    "/dist/index.d.ts",
-    "/dist/index.js",
-    "/dist/WebhookTypes.d.ts",
-    "/dist/WebhookTypes.js"
+    "/dist/*.d.ts",
+    "/dist/*.js"
   ],
   "publishConfig": {
     "access": "public"
