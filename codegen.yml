@@ -11,6 +11,10 @@ hooks:
     - ./node_modules/.bin/tsc plugins/codegen-build-operations/index.ts --esModuleInterop
 
 generates:
+  './types.ts':
+    plugins:
+      - typescript
+
   './index.ts':
     plugins:
       - typescript:

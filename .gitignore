@@ -9,6 +9,7 @@ lerna-debug.log*
 # Graphql generated files
 *.graphql
 index.ts
+types.ts
 plugins/codegen-build-operations/index.js
 
 # Diagnostic reports (https://nodejs.org/api/report.html)

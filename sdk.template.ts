@@ -1,5 +1,6 @@
 import crypto from 'crypto'
 import fetch from 'cross-fetch'
+import { Events } from './WebhookTypes'
 
 type GraphQLError = {
   message: string
@@ -11,6 +12,18 @@ type Request<key extends string | number | symbol> = {
   query: string
   operationName: key
   variables: Record<string, unknown>
+}
+
+/**
+ * Types for webhook events
+ */
+export type WebhookEvent<T extends keyof Events> = {
+  /** ISODate of the timestamp of the request */
+  timestamp: string
+  /** Name of the event being received */
+  name: Events[T]['name']
+  /** Data of the event being received */
+  payload: Events[T]
 }
 
 class AuthenticationError extends Error {
