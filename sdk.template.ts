@@ -2,6 +2,8 @@ import crypto from 'crypto'
 import fetch from 'cross-fetch'
 import { Events } from './WebhookTypes'
 
+const skipped_env = ['local', 'test']
+
 type GraphQLError = {
   message: string
   path: string[]
@@ -65,7 +67,10 @@ export class Firesquad {
    * @param apiKey API Secret to authenticate.
    */
   constructor(apiUrl: string, apiId: string, apiKey: string) {
-    if (!apiUrl.startsWith('https://'))
+    if (
+      !skipped_env.includes(process.env.NODE_ENV) &&
+      !apiUrl.startsWith('https://')
+    )
       throw new Error('Incorrect protocol, API URL should start with https://')
 
     this.apiUrl = apiUrl
