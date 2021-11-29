@@ -76,10 +76,11 @@ export class Firesquad {
   /**
    * This signs an authentication payload, used to validate your authentication
    * with our API without transmitting your token, exchanging it to a short-timed JWT.
+   * If you're receiving websocket, use this to validate your `x-signature-sha-256` header against your secret.
    * @param payload - payload to sign.
    * @returns SHA-256 signature of the payload.
    */
-  private signPayload(payload: string) {
+  public signPayload(payload: string) {
     return crypto
       .createHmac('sha256', this.apiKey)
       .update(payload)
