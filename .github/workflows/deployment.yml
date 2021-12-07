@@ -22,6 +22,10 @@ jobs:
         with:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
+      - name: Get month for cache
+        id: month
+        run: echo "::set-output name=month::$(date +%Y-%m)"
+
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -30,9 +34,7 @@ jobs:
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          key: ${{ runner.os }}-${{ steps.month.outputs.month }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
         run: yarn
