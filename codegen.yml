@@ -1,4 +1,4 @@
-schema: ${GRAPHQL_URL:https://firesquadio.api.fsquad.io/graphql}
+schema: ${GRAPHQL_URL:https://firesquadio.api.firesquad.io/graphql}
 config:
   scalars:
     ID: 'string'
@@ -17,7 +17,6 @@ generates:
 
   './index.ts':
     plugins:
-      - typescript:
-          noExport: true
+      - typescript
       - './plugins/codegen-build-operations/index.js':
           templateName: 'sdk.template.ts'
