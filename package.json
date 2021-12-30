@@ -15,7 +15,7 @@
   "devDependencies": {
     "@graphql-codegen/cli": "^2.3.0",
     "@graphql-codegen/near-operation-file-preset": "^2.2.3",
-    "@graphql-codegen/schema-ast": "^2.3.0",
+    "@graphql-codegen/schema-ast": "^2.4.1",
     "@graphql-codegen/typescript": "^2.4.1",
     "@graphql-tools/utils": "^8.5.5",
     "@semantic-release/git": "^10.0.1",
