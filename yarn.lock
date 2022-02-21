@@ -675,22 +675,6 @@
     auto-bind "~4.0.0"
     tslib "~2.3.0"
 
-"@graphql-codegen/visitor-plugin-common@2.7.0":
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/visitor-plugin-common/-/visitor-plugin-common-2.7.0.tgz#4c78a84e5d193479309d25c1a3bd139670530aef"
-  integrity sha512-/3TZeM/y9UUy7ziUded+GCCGpRychOIbfNfg7HyHR1SxGpG7PrGunsLvYpv4O+ReUba250le4K4IeziVKl0O5g==
-  dependencies:
-    "@graphql-codegen/plugin-helpers" "^2.4.0"
-    "@graphql-tools/optimize" "^1.0.1"
-    "@graphql-tools/relay-operation-optimizer" "^6.3.7"
-    "@graphql-tools/utils" "^8.3.0"
-    auto-bind "~4.0.0"
-    change-case-all "1.0.14"
-    dependency-graph "^0.11.0"
-    graphql-tag "^2.11.0"
-    parse-filepath "^1.0.2"
-    tslib "~2.3.0"
-
 "@graphql-codegen/visitor-plugin-common@2.7.1":
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/visitor-plugin-common/-/visitor-plugin-common-2.7.1.tgz#bdcded24d1d6f329d32b90704397d6001374b893"
@@ -1447,10 +1431,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/ws@^8.0.0", "@types/ws@^8.2.2":
-  version "8.2.2"
-  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-8.2.2.tgz#7c5be4decb19500ae6b3d563043cd407bf366c21"
-  integrity sha512-NOn5eIcgWLOo6qW8AcuLZ7G8PycXu0xTxxkS6Q18VWFxgPUSOwV0pBj2a/4viNZVu25i7RIB7GttdkAIUUXOOg==
+"@types/ws@^8.0.0", "@types/ws@^8.2.3":
+  version "8.2.3"
+  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-8.2.3.tgz#0bca6b03ba2f41e0fab782d4a573fe284aa907ae"
+  integrity sha512-ahRJZquUYCdOZf/rCsWg88S0/+cb9wazUBHv6HZEe3XdYaBe2zr/slM8J28X07Hn88Pnm4ezo7N8/ofnOgrPVQ==
   dependencies:
     "@types/node" "*"
 
