@@ -1,4 +1,7 @@
+name: 'Update dependencies'
 on:
+  workflow_dispatch:
+    
   schedule:
     - cron: '0 9 1-7 * 2'
 
@@ -44,5 +47,4 @@ jobs:
           labels: dependencies
           delete-branch: true
           title: "Update dependencies"
-          commit-message: |
-            [dependencies] Update dependencies
+          commit-message: "chore(deps): Update dependencies"
