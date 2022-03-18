@@ -1,7 +1,7 @@
-name: 'Update dependencies'
+name: "Update dependencies"
 on:
   schedule:
-    - cron: '0 9 1-7 * 2'
+    - cron: "0 9 1-7 * 2"
 
 jobs:
   Dependencies:
@@ -18,21 +18,17 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v2
         with:
-          node-version: '${{ steps.nvm.outputs.NVMRC }}'
-
-      - name: Get month for cache
-        id: month
-        run: echo "::set-output name=month::$(date +%Y-%m)"
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
 
       - uses: actions/cache@v2
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-${{ steps.month.outputs.month }}-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
       - name: Get current date
         id: date
@@ -42,7 +38,7 @@ jobs:
         run: |
           yarn
           npx yarn-upgrade-all
-      
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
