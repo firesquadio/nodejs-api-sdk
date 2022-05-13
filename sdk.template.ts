@@ -152,7 +152,13 @@ export class Firesquad {
     }
   }
 
-  private async doRequest<key extends keyof res, res = Record<key, unknown>>(
+  /**
+   * This is a generic method to run requests to our GraphQL API.
+   * If the default methods does not match your needs, you can use this method to run your own requests.
+   * @param request - Request to send to the API.
+   * @returns - Response from the API.
+   */
+  public async doRequest<key extends keyof res, res = Record<key, unknown>>(
     request: Request<key>
   ): Promise<res[key]> {
     const req = await fetch(`${this.apiUrl}/graphql`, {
