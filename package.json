@@ -4,6 +4,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": "Nahuel Veron <negan@firesquad.io>",
+  "repository": "git@github.com:firesquadio/nodejs-api-sdk.git",
   "files": [
     "/dist/*.d.ts",
     "/dist/*.js"
